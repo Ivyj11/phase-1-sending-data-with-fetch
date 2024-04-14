@@ -13,12 +13,72 @@
 
   <body>
     <h1>Sample Form</h1>
-    <form action="http://localhost:3000/dogs" method="POST">
+    <form>
       <label> Dog Name: <input type="text" name="dogName" id="dogName" /></label><br />
       <label> Dog Breed: <input type="text" name="dogBreed" id="dogBreed" /></label><br />
       <input type="submit" id="submit" value="Submit" />
     </form>
 
+
+
+
+    <script>
+
+const init = () => {
+    const inputForm = document.querySelector("form");
+    inputForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        console.log(event);
+       // const input = document.querySelector("input#searchByID");
+
+       // console.log(input.value);
+
+
+      const formData = {
+  dogName:   document.querySelector("input#dogName").value,
+  dogBreed:  document.querySelector("input#dogBreed").value
+};
+
+// method: "POST" is missing from the object below
+const configurationObject = {
+  headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+  },
+  method: "POST",
+  body: JSON.stringify(formData),
+};
+
+/*
+        fetch("http://localhost:3000/movies")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          // LOG: (3) [{…}, {…}, {…}]
+        });*/
+
+       // const input = document.querySelector("input#searchByID");
+      console.log(configurationObject);
+
+        fetch(`http://localhost:3000/dogs/`, configurationObject)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (object) {
+          console.log(object);
+        })
+        .catch(function (error) {
+          alert("Bad things! Ragnarők!");
+          console.log(error.message);
+        });
+      }
+    );
+}
+
+document.addEventListener('DOMContentLoaded', init);
+    </script>  
+
   </body>
 
 </html>
+
